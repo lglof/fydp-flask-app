@@ -28,10 +28,8 @@ def removeIntervention(id):
 @app.route('/verify', methods=['GET'])
 def verify():
     if (passFunctions.verifyPassword(request.json)):
-        print('true in route')
         return {"check": True}
     else:
-        print('false in route')
         return {"check": False}
 
 @app.route('/newUser/<userType>', methods=['POST'])
