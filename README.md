@@ -59,7 +59,7 @@ In this house we love [postman](https://www.postman.com). You can run the app an
   - `direction` - which direction the intervention was in (string)
   - `pain_level` - the patient's pain level (int)
 
-### getEntries/<num>
+### getEntries/\<num>
 
 - GET requests
 - returns the provided number of most recent interventions as a dict
@@ -70,7 +70,7 @@ In this house we love [postman](https://www.postman.com). You can run the app an
 }
 ```
 
-### deleteEntry/<id>
+### deleteEntry/\<id>
 
 - DELETE requests
 - deletes the entry with the provided id
@@ -83,7 +83,7 @@ In this house we love [postman](https://www.postman.com). You can run the app an
   - `password` - plaintext password (string)
 - returns `{"check": True/False}` based on whether the password is correct or incorrect
 
-### newUser/<userType>
+### newUser/\<userType>
 
 - POST requests
 - provide with a json payload containing:
@@ -91,7 +91,7 @@ In this house we love [postman](https://www.postman.com). You can run the app an
   - `password` - plaintext password (string)
 - creates a user with the provided friendly name, password, and user type
 
-### deleteUser/<id>
+### deleteUser/\<id>
 
 - DELETE requests
 - deletes the user with the provided id
@@ -102,10 +102,10 @@ In this house we love [postman](https://www.postman.com). You can run the app an
 
 - to return interventions performed in a specified time period
 
-### filterType/<type>
+### filterType/\<type>
 
 - to return performed interventions of a certain type
 
-### edit/<id>
+### edit/\<id>
 
 - to edit input interventions
