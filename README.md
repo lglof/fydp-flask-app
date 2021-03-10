@@ -13,6 +13,8 @@
 - Flask, migrate, and SQLAlchemy `pip install Flask Flask-Migrate Flask-SQLAlchemy`
 - sqlite `apt install sqlite3`
 
+- to install all at once `pip install -r requirements.txt`
+
 # Running
 
 ## Basic Set Up
