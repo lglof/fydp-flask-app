@@ -1,6 +1,6 @@
 from flask import jsonify
 from src import app, interventionFunctions, passFunctions
-from flask import request
+from flask import request, make_response
 
 @app.route('/')
 @app.route('/index')
@@ -25,12 +25,11 @@ def removeIntervention(id):
     interventionFunctions.deleteIntervention(id)
     return 'deleted'
 
-@app.route('/verify', methods=['GET'])
+@app.route('/verify', methods=['POST'])
 def verify():
-    if (passFunctions.verifyPassword(request.json)):
-        return {"check": True}
-    else:
-        return {"check": False}
+    check = passFunctions.verifyPassword(request.json)
+    response = make_response({'check': check})
+    return response
 
 @app.route('/newUser/<userType>', methods=['POST'])
 def newUser(userType):
@@ -53,3 +52,9 @@ def filterTime():
 @app.route('/filterType/<type>', methods=['GET'])
 def filterType(type):
     return 'oh no'
+
+@app.after_request
+def after_request(response):
+    header = response.headers
+    header['Access-Control-Allow-Origin'] = '*'
+    return response

@@ -28,4 +28,7 @@ def deleteUser(idNo):
 
 def verifyPassword(contents):
     user = User.query.filter_by(friendly=contents['friendly']).limit(1).all()
-    return user[0].checkPassword(contents['password'])
+    if(len(user) == 0):
+        return False
+    else:
+        return user[0].checkPassword(contents['password'])
