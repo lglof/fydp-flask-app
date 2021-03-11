@@ -14,6 +14,9 @@ class PerformedIntervention(db.Model):
     time = db.Column(db.DateTime, index=True, default=datetime.utcnow)
     direction = db.Column(db.String(64), index=True)
     pain_level = db.Column(db.Integer)
+    intervention_location = db.Column(db.String(64))
+    pain_location = db.Column(db.String(64))
+    pu_concern = db.Column(db.Integer)
 
     def to_dict(self):
         data = {
@@ -22,7 +25,10 @@ class PerformedIntervention(db.Model):
             'worker': self.worker,
             'time': self.time.isoformat() + 'Z',
             'direction': self.direction,
-            'pain_level': self.pain_level
+            'pain_level': self.pain_level,
+            'intervention_location': self.intervention_location,
+            'pain_location': self.pain_location,
+            'pu_concern': self.pu_concern
         }
         return data
 
