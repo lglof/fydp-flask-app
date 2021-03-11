@@ -36,7 +36,7 @@ class PerformedIntervention(db.Model):
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    friendly = db.Column(db.String(64), unique=True)
+    friendly = db.Column(db.String(64))
     salt = db.Column(db.String(128))
     password_hash = db.Column(db.String(128))
     user_type = db.Column(db.String(32))
