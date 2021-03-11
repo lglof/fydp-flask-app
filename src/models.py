@@ -17,6 +17,7 @@ class PerformedIntervention(db.Model):
     intervention_location = db.Column(db.String(64))
     pain_location = db.Column(db.String(64))
     pu_concern = db.Column(db.Integer)
+    late = db.Column(db.Integer, default=0)
 
     def to_dict(self):
         data = {
@@ -28,13 +29,14 @@ class PerformedIntervention(db.Model):
             'pain_level': self.pain_level,
             'intervention_location': self.intervention_location,
             'pain_location': self.pain_location,
-            'pu_concern': self.pu_concern
+            'pu_concern': self.pu_concern,
+            'late': self.late
         }
         return data
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    friendly = db.Column(db.String(64))
+    friendly = db.Column(db.String(64), unique=True)
     salt = db.Column(db.String(128))
     password_hash = db.Column(db.String(128))
     user_type = db.Column(db.String(32))
