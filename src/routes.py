@@ -11,8 +11,8 @@ def index():
 @app.route('/createEntry', methods=['POST'])
 @cross_origin()
 def createEntry():
-    interventionFunctions.addIntervention(request.json)
-    return request.json
+    newIntervention = interventionFunctions.addIntervention(request.json)
+    return newIntervention
 
 @app.route('/getEntries/<num>', methods=['GET'])
 @cross_origin()
