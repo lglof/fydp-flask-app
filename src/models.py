@@ -50,3 +50,35 @@ class User(db.Model):
             'friendly': self.friendly
         }
         return data
+
+class Demographics(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    patient = db.Column(db.String(64))
+    admission_date = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+    age = db.Column(db.Integer, default=42)
+    braden_score = db.Column(db.Integer, default=9)
+    diagnoses = db.Column(db.String(128), default="Nothing, also Nothing, nada")
+    medications = db.Column(db.String(128), default="again, nothing, no")
+    prevention_plan = db.Column(db.String(128))
+    room = db.Column(db.String(64))
+    most_recent = db.Column(db.String(64))
+    mins_since_last = db.Column(db.Integer)
+    ## these entries are here just to keep db migrate happy :(
+    last_intervntion_time = db.Column(db.String(64))
+    last_intervention_time = db.Column(db.String(64))
+
+    def to_dict(self):
+        data = {
+            'id': self.id,
+            'patient': self.patient,
+            'admission_date': self.admission_date.isoformat() + 'Z',
+            'age': self.age,
+            'braden_score': self.braden_score,
+            'diagnoses': self.diagnoses,
+            'medications': self.medications, 
+            'prevention_plan': self.prevention_plan,
+            'room': self.room,
+            'most_recent': self.most_recent,
+            'mins_since_last': self.mins_since_last
+        }
+        return data

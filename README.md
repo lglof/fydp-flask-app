@@ -98,6 +98,29 @@ In this house we love [postman](https://www.postman.com). You can run the app an
 - DELETE requests
 - deletes the user with the provided id
 
+### addDemographics
+- POST requests
+- provide with payload containing:
+  - `age` - an integer
+  - `braden_score` - an integer
+  - `diagnoses` - a string with diagnoses seperated by a semicolon(;)
+  - `medications` - similar to diagnoses
+  - `prevention_plan` - also similar to diagnoses
+  - `most_recent` - string describing the most recent intervention
+  - `patient` - name of the patient impacted
+  - `room` - 'Room #'
+  - `mins_since_last` - the number of minutes since the last intervention
+    - ideally will update this one to take time since the last intervention in a table
+- creates the patient's demographics for use on overview and demographics pgs
+
+### getDemographics/\<id>
+- GET requests
+- returns JSON containing demographics for patient w/ provided ID
+
+### batchDemographics/\<num>
+- GET requests
+- returns JSON containing demographics for `num` patients with the longest time since the last intervention
+
 ## Working On
 
 ### filterTime

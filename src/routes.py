@@ -1,5 +1,5 @@
 from flask import jsonify
-from src import app, interventionFunctions, passFunctions
+from src import app, interventionFunctions, passFunctions, demoFunctions
 from flask import request, make_response
 from flask_cors import CORS, cross_origin
 
@@ -47,6 +47,24 @@ def newUser(userType):
 def deleteUser(id):
     passFunctions.deleteUser(id)
     return 'deleted'
+
+@app.route('/addDemographics', methods=['POST'])
+@cross_origin()
+def addDemographics():
+    newDemographics = demoFunctions.createNewDemographics(request.json)
+    return newDemographics
+
+@app.route('/getDemographics/<id>', methods=['GET'])
+@cross_origin()
+def getDemographics(id):
+    demographicInfo = demoFunctions.getDemographics(id)
+    return demographicInfo
+
+@app.route('/batchDemographics/<num>', methods=['GET'])
+@cross_origin()
+def batchDemographics(num):
+    demographics = demoFunctions.batchDemographics(num)
+    return demographics
 
 @app.route('/edit/<id>', methods=['PATCH'])
 @cross_origin()
