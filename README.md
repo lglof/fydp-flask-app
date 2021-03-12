@@ -57,14 +57,35 @@ In this house we love [postman](https://www.postman.com). You can run the app an
 - POST requests
 - provide it with json payload containing:
   - `type` - the intervention type (string)
+  - `late` - 0/1 based on not late/late intervention
+  - `time` - date in the format 'YYYY-MM-DD HH:MM:SS'
+  - `patient_id` - id of patient intervention performed on
   - `worker` - who performed the intervention (string)
   - `direction` - which direction the intervention was in (string)
   - `pain_level` - the patient's pain level (int)
+  - `intervention_location` - where intervention was done
+  - `pain_location` - where pain is
+  - `pu_concern` - 0/1 based on not concerend/ concerned
 
-### getEntries/\<num>
+```
+{
+    "type": 5,
+    "late": 0, 
+    "time": "2020-04-11 16:12:00",
+    "patient_id": 1,
+    "worker": "2",
+    "direction": "Right",
+    "painLevel": 3,
+    "intervention_location": "right arm",
+    "pain_location": "left leg",
+    "pu_concern": 0
+}
+```
+
+### getEntries/\<num>/\<id>
 
 - GET requests
-- returns the provided number of most recent interventions as a dict
+- returns the provided number of most recent interventions performed on specific patient id as a dict
 
 ```
 {

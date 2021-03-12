@@ -10,6 +10,7 @@ class InterventionType(db.Model):
 class PerformedIntervention(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     type = db.Column(db.Integer, db.ForeignKey('intervention_type.id'))
+    patient_id = db.Column(db.Integer, db.ForeignKey('demographics.id'))
     worker = db.Column(db.String(64), index=True)
     time = db.Column(db.DateTime, index=True, default=datetime.utcnow)
     direction = db.Column(db.String(64), index=True)
@@ -30,7 +31,9 @@ class PerformedIntervention(db.Model):
             'intervention_location': self.intervention_location,
             'pain_location': self.pain_location,
             'pu_concern': self.pu_concern,
-            'late': self.late
+            'late': self.late, 
+            'patient_name': self.Demographics.patient,
+            'patient_id': self.patient_id
         }
         return data
 
@@ -63,9 +66,7 @@ class Demographics(db.Model):
     room = db.Column(db.String(64))
     most_recent = db.Column(db.String(64))
     mins_since_last = db.Column(db.Integer)
-    ## these entries are here just to keep db migrate happy :(
-    last_intervntion_time = db.Column(db.String(64))
-    last_intervention_time = db.Column(db.String(64))
+    performed_interventions = db.relationship('PerformedIntervention', backref='Demographics', lazy='dynamic')
 
     def to_dict(self):
         data = {

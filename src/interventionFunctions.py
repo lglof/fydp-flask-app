@@ -1,23 +1,26 @@
+from datetime import datetime
 from src import db
 from src.models import PerformedIntervention, InterventionType
 
 def addIntervention(contents):
+    timeStamp = datetime.strptime(contents['time'], "%Y-%m-%d %H:%M:%S")
     newIntervention = PerformedIntervention( \
         type=contents['type'], worker=contents['worker'], \
              direction=contents['direction'], pain_level=contents['painLevel'], \
                  intervention_location=contents['intervention_location'], pain_location=contents['pain_location'], \
-                     pu_concern=contents['pu_concern'], late=contents['late'])
+                     pu_concern=contents['pu_concern'], late=contents['late'], \
+                         patient_id=contents['patient_id'], time=timeStamp)
     try:
         db.session.add(newIntervention)
         db.session.commit()
     except:
         print('an exception has occured')
-        return 0
+        return '0'
     else:
         return newIntervention.to_dict()
 
-def viewInterventions(num):
-    interventions = PerformedIntervention.query.order_by(PerformedIntervention.time.desc()).limit(num).all()
+def viewInterventions(num, idNo):
+    interventions = PerformedIntervention.query.filter_by(patient_id=idNo).order_by(PerformedIntervention.time.desc()).limit(num).all()
     return interventions
 
 def deleteIntervention(idNo):
