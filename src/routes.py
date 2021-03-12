@@ -14,10 +14,10 @@ def createEntry():
     newIntervention = interventionFunctions.addIntervention(request.json)
     return newIntervention
 
-@app.route('/getEntries/<num>', methods=['GET'])
+@app.route('/getEntries/<num>/<id>', methods=['GET'])
 @cross_origin()
-def getEntries(num):
-    interventions = interventionFunctions.viewInterventions(num)
+def getEntries(num, id):
+    interventions = interventionFunctions.viewInterventions(num, id)
     data = {
         'items': [item.to_dict() for item in interventions]
     }

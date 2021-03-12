@@ -67,9 +67,6 @@ class Demographics(db.Model):
     most_recent = db.Column(db.String(64))
     mins_since_last = db.Column(db.Integer)
     performed_interventions = db.relationship('PerformedIntervention', backref='Demographics', lazy='dynamic')
-    ## these entries are here just to keep db migrate happy :(
-    # last_intervntion_time = db.Column(db.String(64))
-    # last_intervention_time = db.Column(db.String(64))
 
     def to_dict(self):
         data = {
