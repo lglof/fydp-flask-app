@@ -61,10 +61,10 @@ In this house we love [postman](https://www.postman.com). You can run the app an
   - `direction` - which direction the intervention was in (string)
   - `pain_level` - the patient's pain level (int)
 
-### getEntries/\<num>
+### getEntries/\<num>/\<id>
 
 - GET requests
-- returns the provided number of most recent interventions as a dict
+- returns the provided number of most recent interventions performed on specific patient id as a dict
 
 ```
 {
