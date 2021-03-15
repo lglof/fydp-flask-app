@@ -24,8 +24,6 @@
 - Set up virtual environment `python3 -m venv venv`
 - Activate the venv `source <path_to>/venv`
 - Make sure you have all the dependencies installed
-- To get the db going `Flask db upgrade`
-  - _I'm not sure if this part is right_
 - Then to finally run the app `Flask run`
 
 ## Basic Db Functions
@@ -44,9 +42,13 @@ To interact with the db directly (I'll do this to just manually make sure things
 
 You'll be running with the `Flask run` command. If you want the server to notice any changes you make to a `.py` file and update to new code you can set an environment variable. `export FLASK_DEBUG=1`
 
+If you want the prepopulated db (to be used for user testing for now), update `SQLALCHEMY_DATABASE_URI` in `config.py` to `os.path.join(basedir, 'db/SOAR_testData.db')` instead of just `SOAR.db`. 
+
 ## A good testing method
 
 In this house we love [postman](https://www.postman.com). You can run the app and then interact with it using each of the routes from within postman.
+
+I've started using [robot framework](http://robotframework.org/robotframework/latest/RobotFrameworkUserGuide.html#variables) to make unit tests for the thing. If you want to run those, use the command `robot tests/` from the root dir of the project. These will output a bunch of things to your terminal, and you should be able to test using mostly that. But if you need more information, they also create 3 reports files, `output.xml`, `log.html`, and `report.html`. The `log.html` is really darn good. By default these are made in the root of the project, and you can update that by running `export ROBOT_OPTIONS="--outputdir tests/reports"` in your terminal. (I'm still looking for a way to set this permanently)
 
 # Routes
 
