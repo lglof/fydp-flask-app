@@ -36,17 +36,17 @@ verify should return false for incorrect user/password combo
     Status Should Be  200   ${resp}
     Should Be Equal As Strings  ${resp.json()}[check]   False 
 
-verify should return 400 for user not found
+verify should return 404 for user not found
     &{bad_user}=    Create Dictionary   friendly=test5  password=test7
     ${resp}=    POST On Session     SOAR    /verify     json=&{bad_user}    headers=&{HEADERS}  expected_status=anything
-    Status Should Be    400     ${resp}
+    Status Should Be    404     ${resp}
     Dictionary Should Contain Key   ${resp.json()}  error_message
 
 deleteUser should return 200 ok for good user id
     ${resp}=    DELETE On Session   SOAR    /deleteUser/${created_id}   headers=&{HEADERS}
     Status Should Be  200   ${resp} 
 
-deleteUser should return 500 for non existent user id
+deleteUser should return 400 for non existent user id
     ${resp}=    DELETE On Session   SOAR    /deleteUser/-4      headers=&{HEADERS}  expected_status=anything
     Status Should Be    400  ${resp}
     Dictionary Should Contain Key  ${resp.json()}  error_message
