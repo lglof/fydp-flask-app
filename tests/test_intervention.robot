@@ -46,8 +46,7 @@ deleteEntry should return 400 and error when id doesn't exist
 
 getEntries should return correct number of entries
     Set test variable  ${expected_entries}  2
-    ${resp_json}=  Get On Session  SOAR  /getEntries/${expected_entries}/1  headers=&{HEADERS}
-    Log  ${resp_json.json()}
-
-    Dictionary Should Contain Key  ${resp_json.json()}  items
-    Should Be Equal As Strings  ${resp_json.json()}[num_items]  ${expected_entries}
+    ${resp}=  Get On Session  SOAR  /getEntries/${expected_entries}/1  headers=&{HEADERS}
+    Status Should Be    200     ${resp}
+    Dictionary Should Contain Key  ${resp.json()}  items
+    Should Be Equal As Strings  ${resp.json()}[num_items]  ${expected_entries}

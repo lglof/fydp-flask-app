@@ -22,7 +22,7 @@
 - Clone repo
 - `cd` into repo
 - Set up virtual environment `python3 -m venv venv`
-- Activate the venv `source <path_to>/venv`
+- Activate the venv `source <path_to>/venv/bin/activate`
 - Make sure you have all the dependencies installed
 - Then to finally run the app `Flask run`
 
@@ -48,7 +48,7 @@ If you want the prepopulated db (to be used for user testing for now), update `S
 
 In this house we love [postman](https://www.postman.com). You can run the app and then interact with it using each of the routes from within postman.
 
-I've started using [robot framework](http://robotframework.org/robotframework/latest/RobotFrameworkUserGuide.html#variables) to make unit tests for the thing. If you want to run those, use the command `robot tests/` from the root dir of the project. These will output a bunch of things to your terminal, and you should be able to test using mostly that. But if you need more information, they also create 3 reports files, `output.xml`, `log.html`, and `report.html`. The `log.html` is really darn good. By default these are made in the root of the project, and you can update that by running `export ROBOT_OPTIONS="--outputdir tests/reports"` in your terminal. (I'm still looking for a way to set this permanently)
+I've started using [robot framework](http://robotframework.org/robotframework/latest/RobotFrameworkUserGuide.html#variables) to make unit tests for the thing. If you want to run those, use the command `robot tests/ -d tests/reports` from the root dir of the project. These will output a bunch of things to your terminal, and you should be able to test using mostly that. But if you need more information, they also create 3 reports files, `output.xml`, `log.html`, and `report.html`. The `log.html` is really darn good. By default these are made in the root of the project, and you can update that by running `export ROBOT_OPTIONS="--outputdir tests/reports"` in your terminal. (I'm still looking for a way to set this permanently)
 
 # Routes
 

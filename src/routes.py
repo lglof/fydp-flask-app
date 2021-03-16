@@ -13,7 +13,7 @@ def index():
 def createEntry():
     newIntervention = interventionFunctions.addIntervention(request.json)
     if (newIntervention == 'error'):
-        response = make_response({"error_message": "missing key"}, 400)
+        response = make_response({"error_message": "missing field in provided intervention"}, 400)
     else:
         response = make_response(newIntervention, 201)
     return response
@@ -26,7 +26,7 @@ def getEntries(num, id):
         'items': [item.to_dict() for item in interventions],
         'num_items': len(interventions)
     }
-    response = make_response(data, 201)
+    response = make_response(data, 200)
     return response
 
 @app.route('/deleteEntry/<id>', methods=['DELETE'])
