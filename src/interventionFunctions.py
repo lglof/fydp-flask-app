@@ -4,18 +4,18 @@ from src.models import PerformedIntervention, InterventionType
 
 def addIntervention(contents):
     timeStamp = datetime.strptime(contents['time'], "%Y-%m-%d %H:%M:%S")
-    newIntervention = PerformedIntervention( \
-        type=contents['type'], worker=contents['worker'], \
-             direction=contents['direction'], pain_level=contents['painLevel'], \
-                 intervention_location=contents['intervention_location'], pain_location=contents['pain_location'], \
-                     pu_concern=contents['pu_concern'], late=contents['late'], \
-                         patient_id=contents['patient_id'], time=timeStamp)
     try:
+        newIntervention = PerformedIntervention( \
+            type=contents['type'], worker=contents['worker'], \
+                direction=contents['direction'], pain_level=contents['painLevel'], \
+                    intervention_location=contents['intervention_location'], pain_location=contents['pain_location'], \
+                        pu_concern=contents['pu_concern'], late=contents['late'], \
+                            patient_id=contents['patient_id'], time=timeStamp)
         db.session.add(newIntervention)
         db.session.commit()
     except:
         print('an exception has occured')
-        return '0'
+        return 'error'
     else:
         return newIntervention.to_dict()
 

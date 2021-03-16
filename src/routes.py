@@ -3,7 +3,7 @@ from src import app, interventionFunctions, passFunctions, demoFunctions
 from flask import request, make_response
 from flask_cors import CORS, cross_origin
 
-@app.route('/')
+@app.route('/index')
 @cross_origin()
 def index():
     return 'hell wrld'
@@ -12,59 +12,93 @@ def index():
 @cross_origin()
 def createEntry():
     newIntervention = interventionFunctions.addIntervention(request.json)
-    return newIntervention
+    if (newIntervention == 'error'):
+        response = make_response({"error_message": "missing field in provided intervention"}, 400)
+    else:
+        response = make_response(newIntervention, 201)
+    return response
 
 @app.route('/getEntries/<num>/<id>', methods=['GET'])
 @cross_origin()
 def getEntries(num, id):
     interventions = interventionFunctions.viewInterventions(num, id)
     data = {
-        'items': [item.to_dict() for item in interventions]
+        'items': [item.to_dict() for item in interventions],
+        'num_items': len(interventions)
     }
-    return data
+    response = make_response(data, 200)
+    return response
 
 @app.route('/deleteEntry/<id>', methods=['DELETE'])
 @cross_origin()
 def removeIntervention(id):
-    interventionFunctions.deleteIntervention(id)
-    return 'deleted'
+    success = interventionFunctions.deleteIntervention(id)
+    if success == 0:
+        response = make_response({"error_message": "id does not exist"}, 400)
+    else:
+        response = make_response("Success", 200)
+    return response
 
 @app.route('/verify', methods=['POST'])
 @cross_origin()
 def verify():
     check = passFunctions.verifyPassword(request.json)
-    response = make_response({'check': check})
+    if check == 'no users':
+        response = make_response({'error_message': check}, 404)
+    else: 
+        response = make_response({'check': check}, 200)
     return response
 
 @app.route('/newUser/<userType>', methods=['POST'])
 @cross_origin()
 def newUser(userType):
-    passFunctions.createNewUser(userType, request.json)
-    return 'created'
+    newUser = passFunctions.createNewUser(userType, request.json)
+    if newUser == 0:
+        response = make_response({"error_message": "missing field"}, 400)
+    else:
+        response = make_response(newUser, 201)
+    return response
 
 @app.route('/deleteUser/<id>', methods=['DELETE'])
 @cross_origin()
 def deleteUser(id):
-    passFunctions.deleteUser(id)
-    return 'deleted'
+    out = passFunctions.deleteUser(id)
+    if out == 0: 
+        response = make_response({"error_message": "no user with that id exists"}, 400)
+    else:
+        response = make_response({'status': 'deleted'}, 200)
+    return response
 
 @app.route('/addDemographics', methods=['POST'])
 @cross_origin()
 def addDemographics():
     newDemographics = demoFunctions.createNewDemographics(request.json)
-    return newDemographics
+    if newDemographics == 0:
+        response = make_response({"error_message": "Missing Key"}, 400)
+    else: 
+        response = make_response(newDemographics, 201)
+    return response
 
 @app.route('/getDemographics/<id>', methods=['GET'])
 @cross_origin()
 def getDemographics(id):
     demographicInfo = demoFunctions.getDemographics(id)
-    return demographicInfo
+    if demographicInfo == 0:
+        response = make_response({"error_message": "no patient with that id"}, 400)
+    else:
+        response = make_response(demographicInfo, 200) 
+    return response
 
 @app.route('/batchDemographics/<num>', methods=['GET'])
 @cross_origin()
 def batchDemographics(num):
     demographics = demoFunctions.batchDemographics(num)
-    return demographics
+    data = {
+        'items': [item.to_dict() for item in demographics],
+        'num_items': len(demographics)
+    }
+    response = make_response(data, 200)
+    return response
 
 @app.route('/edit/<id>', methods=['PATCH'])
 @cross_origin()

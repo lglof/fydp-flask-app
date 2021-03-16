@@ -1,2 +1,8 @@
 __pycache__/
 venv
+.env
+.vscode/
+tests/reports
+log.html
+output.xml
+report.html
