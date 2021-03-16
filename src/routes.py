@@ -44,7 +44,7 @@ def removeIntervention(id):
 def verify():
     check = passFunctions.verifyPassword(request.json)
     if check == 'no users':
-        response = make_response({'error_message': check}, 400)
+        response = make_response({'error_message': check}, 404)
     else: 
         response = make_response({'check': check}, 200)
     return response
