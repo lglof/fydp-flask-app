@@ -13,7 +13,7 @@ def index():
 def createEntry():
     newIntervention = interventionFunctions.addIntervention(request.json)
     if (newIntervention == 'error'):
-        response = make_response({"error_message": "missing field in provided intervention"}, 400)
+        response = make_response({"error_message": "there was an error with the db"}, 500)
     else:
         response = make_response(newIntervention, 201)
     return response
