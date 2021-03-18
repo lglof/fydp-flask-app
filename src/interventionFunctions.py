@@ -3,21 +3,21 @@ from src import db
 from src.models import PerformedIntervention, InterventionType
 
 def addIntervention(contents):
-    timeStamp = datetime.strptime(contents['time'], "%Y-%m-%d %H:%M:%S")
+    interventions = contents["interventions"]
+    output = {}
     try:
-        newIntervention = PerformedIntervention( \
-            type=contents['type'], worker=contents['worker'], \
-                direction=contents['direction'], pain_level=contents['painLevel'], \
-                    intervention_location=contents['intervention_location'], pain_location=contents['pain_location'], \
-                        pu_concern=contents['pu_concern'], late=contents['late'], \
-                            patient_id=contents['patient_id'], time=timeStamp)
-        db.session.add(newIntervention)
-        db.session.commit()
+        for intervention in interventions:
+            newIntervention = PerformedIntervention()
+            newIntervention.from_dict(intervention)
+            db.session.add(newIntervention)
+            db.session.commit()
+            output["last_id"] = newIntervention.to_dict()["id"]
     except:
         print('an exception has occured')
         return 'error'
     else:
-        return newIntervention.to_dict()
+        output["num_interventions"] = len(interventions)
+        return output
 
 def viewInterventions(num, idNo):
     interventions = PerformedIntervention.query.filter_by(patient_id=idNo).order_by(PerformedIntervention.time.desc()).limit(num).all()

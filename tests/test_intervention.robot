@@ -14,25 +14,15 @@ ${HOST}  http://localhost:5000
 
 ** Test Cases ** 
 
-createEntry should return 201 ok and correct intervention data
-    &{data}=    Create Dictionary   type=1      worker=1   
+createEntry should return 201 ok and correct intervention summary
+    &{intervention}=    Create Dictionary   type=1      worker=1   
 ...    direction=Left  painLevel=2    intervention_location=Left Elbow
-...    pain_location=Right Elbow    pu_concern=1    late=1
-...    time=2020-04-20 14:20:00  patient_id=2
+...    pain_location=Right Elbow    pu_concern=1    late=1  patient_id=2
+    &{data}=    Create Dictionary   interventions=[&{intervention}]
     ${resp}=    POST On Session   SOAR  /createEntry   json=&{data}     headers=&{HEADERS}
-    Set Suite Variable   ${delete_id}    ${resp.json()}[id]
+    Set Suite Variable   ${delete_id}    ${resp.json()}[last_id]
     Status Should Be    201     ${resp}
-    Dictionary Should Contain Key  ${resp.json()}   id
-
-createEntry should return 400 for incomplete intervention data
-    &{data}=    Create Dictionary   type=1      worker=1   
-...    direction=Left  painLevel=2    intervention_location=Left Elbow
-...    pain_location=Right Elbow    pu_concern=1    late=1
-...    time=2020-04-20 14:20:00
-    ${resp}=  POST On Session   SOAR    /createEntry  json=&{data}  headers=&{HEADERS}  expected_status=anything
-    
-    Status Should Be   400  ${resp}
-    Dictionary Should Contain Key  ${resp.json()}  error_message
+    Dictionary Should Contain Key  ${resp.json()}   num_interventions
 
 deleteEntry should return 200 ok for id that exists
     ${resp}=    DELETE On Session  SOAR    /deleteEntry/${delete_id}  headers=&{HEADERS}  
@@ -40,7 +30,7 @@ deleteEntry should return 200 ok for id that exists
 
 deleteEntry should return 400 and error when id doesn't exist
     Set test variable  ${delete_incorrect_id}     -3
-    ${resp}=    DELETE On Session   SOAR    /deleteEntry/${delete_id}   headers=&{HEADERS}  expected_status=anything
+    ${resp}=    DELETE On Session   SOAR    /deleteEntry/${delete_incorrect_id}   headers=&{HEADERS}  expected_status=anything
     Status Should Be    400     ${resp}
     Dictionary Should Contain Key   ${resp.json()}     error_message
 

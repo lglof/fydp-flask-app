@@ -9,15 +9,15 @@ class InterventionType(db.Model):
 
 class PerformedIntervention(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    type = db.Column(db.Integer, db.ForeignKey('intervention_type.id'))
-    patient_id = db.Column(db.Integer, db.ForeignKey('demographics.id'))
-    worker = db.Column(db.String(64), index=True)
+    type = db.Column(db.Integer, db.ForeignKey('intervention_type.id'), default=1)
+    patient_id = db.Column(db.Integer, db.ForeignKey('demographics.id'), default=1)
+    worker = db.Column(db.String(64), index=True, default="nobody")
     time = db.Column(db.DateTime, index=True, default=datetime.utcnow)
-    direction = db.Column(db.String(64), index=True)
-    pain_level = db.Column(db.Integer)
-    intervention_location = db.Column(db.String(64))
-    pain_location = db.Column(db.String(64))
-    pu_concern = db.Column(db.Integer)
+    direction = db.Column(db.String(64), index=True, default='left')
+    pain_level = db.Column(db.Integer, default=1)
+    intervention_location = db.Column(db.String(64), default='none')
+    pain_location = db.Column(db.String(64), default='none')
+    pu_concern = db.Column(db.Integer, default=0)
     late = db.Column(db.Integer, default=0)
 
     def to_dict(self):
@@ -36,6 +36,14 @@ class PerformedIntervention(db.Model):
             'patient_id': self.patient_id
         }
         return data
+
+    def from_dict(self, data):
+        for field in ['type', 'worker', 'direction', 'pain_level', 'intervention_location', 'pain_location', 'pu_concern', 'late', 'patient_id']:
+            if field in data: 
+                setattr(self, field, data[field])
+        if 'timeStamp' in data:
+            timeStamp = datetime.strptime(data['time'], "%Y-%m-%d %H:%M:%S")
+            setattr(self, 'time', timeStamp)
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
