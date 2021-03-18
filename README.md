@@ -57,7 +57,7 @@ I've started using [robot framework](http://robotframework.org/robotframework/la
 ### createEntry
 
 - POST requests
-- provide it with json payload containing:
+- provide it with json payload containing an array of `interventions`:
   - `type` - the intervention type (string)
   - `late` - 0/1 based on not late/late intervention
   - `time` - date in the format 'YYYY-MM-DD HH:MM:SS'
@@ -71,16 +71,29 @@ I've started using [robot framework](http://robotframework.org/robotframework/la
 
 ```
 {
-    "type": 5,
-    "late": 0, 
-    "time": "2020-04-11 16:12:00",
-    "patient_id": 1,
-    "worker": "2",
-    "direction": "Right",
-    "painLevel": 3,
-    "intervention_location": "right arm",
-    "pain_location": "left leg",
-    "pu_concern": 0
+   "interventions":  [
+       {
+        "type": 5,
+        "late": 0, 
+        "time": "2020-04-11 16:12:00",
+        "direction": "Right",
+        "painLevel": 3
+        },
+        {
+        "type": 5,
+        "late": 0, 
+        "time": "2020-04-11 16:12:00",
+        "direction": "Right",
+        "painLevel": 7
+        },
+        {
+        "type": 5,
+        "late": 0, 
+        "time": "2020-04-11 16:12:00",
+        "direction": "Right",
+        "painLevel": 7
+        }
+    ]
 }
 ```
 
