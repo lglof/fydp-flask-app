@@ -42,7 +42,7 @@ To interact with the db directly (I'll do this to just manually make sure things
 
 You'll be running with the `Flask run` command. If you want the server to notice any changes you make to a `.py` file and update to new code you can set an environment variable. `export FLASK_DEBUG=1` 
 
-To revert your db to what you pulled run `git stash`.
+To revert your db to what you pulled run `git reset --hard`.
 
 ## A good testing method
 
