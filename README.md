@@ -40,9 +40,9 @@ To interact with the db directly (I'll do this to just manually make sure things
 
 ## Running the App
 
-You'll be running with the `Flask run` command. If you want the server to notice any changes you make to a `.py` file and update to new code you can set an environment variable. `export FLASK_DEBUG=1`
+You'll be running with the `Flask run` command. If you want the server to notice any changes you make to a `.py` file and update to new code you can set an environment variable. `export FLASK_DEBUG=1` 
 
-If you want the prepopulated db (to be used for user testing for now), update `SQLALCHEMY_DATABASE_URI` in `config.py` to `os.path.join(basedir, 'db/SOAR_testData.db')` instead of just `SOAR.db`. 
+To revert your db to what you pulled run `git stash`.
 
 ## A good testing method
 
