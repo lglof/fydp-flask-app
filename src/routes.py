@@ -23,7 +23,7 @@ def createEntry():
 def getEntries(num, id):
     interventions = interventionFunctions.viewInterventions(num, id)
     if (interventions == 'error'):
-        response = make_response({"error_message": "id does not exist"}, 400)
+        response = make_response({"error_message": "no interventions for provided id"}, 400)
     else:
         data = {
             'items': [item.to_dict() for item in interventions],
