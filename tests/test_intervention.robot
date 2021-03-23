@@ -40,3 +40,8 @@ getEntries should return correct number of entries
     Status Should Be    200     ${resp}
     Dictionary Should Contain Key  ${resp.json()}  items
     Should Be Equal As Strings  ${resp.json()}[num_items]  ${expected_entries}
+
+getEntries should return 404 for id not found
+    ${resp}=  Get On Session  SOAR  /getEntries/2/-1  headers=&{HEADERS}  expected_status=anything
+    Status Should Be  404  ${resp}
+    Dictionary Should Contain Key  ${resp.json()}  error_message

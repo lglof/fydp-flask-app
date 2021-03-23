@@ -22,11 +22,14 @@ def createEntry():
 @cross_origin()
 def getEntries(num, id):
     interventions = interventionFunctions.viewInterventions(num, id)
-    data = {
-        'items': [item.to_dict() for item in interventions],
-        'num_items': len(interventions)
-    }
-    response = make_response(data, 200)
+    if (interventions == 'error'):
+        response = make_response({"error_message": "id does not exist"}, 400)
+    else:
+        data = {
+            'items': [item.to_dict() for item in interventions],
+            'num_items': len(interventions)
+        }
+        response = make_response(data, 200)
     return response
 
 @app.route('/deleteEntry/<id>', methods=['DELETE'])

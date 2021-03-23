@@ -21,7 +21,10 @@ def addIntervention(contents):
 
 def viewInterventions(num, idNo):
     interventions = PerformedIntervention.query.filter_by(patient_id=idNo).order_by(PerformedIntervention.time.desc()).limit(num).all()
-    return interventions
+    if (len(interventions) == 0):
+        return 'error'
+    else:
+        return interventions
 
 def deleteIntervention(idNo):
     intervention = PerformedIntervention.query.filter_by(id=idNo).limit(1).all()
